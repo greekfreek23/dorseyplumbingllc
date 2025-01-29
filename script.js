@@ -10,8 +10,14 @@
     // Add more sections if needed
   };
 
-  // Hardcoded place ID for Dorsey Plumbing
-  const placeId = 'ChIJeTIrzE1TrKMRCq-vILpE01A';
+  // Get place_id parameter from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const placeId = urlParams.get('place_id');
+  
+  if(!placeId) {
+    console.warn("No ?place_id= provided in URL. Page won't populate data.");
+    return;
+  }
 
   const WEBSITE_DATA_URL = "https://raw.githubusercontent.com/greekfreek23/alabamaplumbersnowebsite/main/finalWebsiteData.json";
   const PHOTO_DATA_URL = "https://raw.githubusercontent.com/greekfreek23/alabamaplumbersnowebsite/main/data/businessPhotoContent.json";
@@ -400,7 +406,47 @@
     track.addEventListener('mouseleave', handleResume);
 
     // For mobile touch
-    track.addEventListener('touchstart', handle
+    track.addEventListener('touchstart', handlePause);
+    track.addEventListener('touchend', handleResume);
+  }
+
+  function startHeroSlider() {
+    const slides = document.querySelectorAll('.slides .slide');
+    if(!slides.length) return;
+
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (!document.contains(slides[0])) {
+        clearInterval(interval);
+        return;
+      }
+      slides[currentIndex].classList.remove("active");
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add("active");
+    }, 5000);
+    sliderIntervals.push(interval);
+  }
+
+  // Cleanup intervals when the page is unloaded to prevent memory leaks
+  window.addEventListener('beforeunload', () => {
+    clearSliderIntervals();
+  });
+
+  // Utility function to check if an element is in the viewport
+  function isElementInViewport(el) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top < (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.bottom > 0
+    );
+  }
+
+})();
+
+
+
+
 
 
 
