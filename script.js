@@ -10,14 +10,11 @@
     // Add more sections if needed
   };
 
-  // Get place_id parameter from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const placeId = urlParams.get('place_id');
-  
-  if(!placeId) {
-    console.warn("No ?place_id= provided in URL. Page won't populate data.");
-    return;
-  }
+// Hardcode the place ID for Dorsey Plumbing LLC
+const placeId = "ChIJeTIrzE1TrKMRCq-vILpE01A";
+
+// ... the rest of your existing code that uses placeId ...
+
 
   const WEBSITE_DATA_URL = "https://raw.githubusercontent.com/greekfreek23/alabamaplumbersnowebsite/main/finalWebsiteData.json";
   const PHOTO_DATA_URL = "https://raw.githubusercontent.com/greekfreek23/alabamaplumbersnowebsite/main/data/businessPhotoContent.json";
