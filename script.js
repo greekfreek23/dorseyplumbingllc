@@ -162,6 +162,209 @@
       el.textContent = data.businessName || "Business Name Not Found";
     });
 
+    const phone = "470-489-8841"; // Hardcoded phone number
+    safeQuerySelectorAll("[data-phone]", el => {
+      if(el.tagName.toLowerCase() === 'a'){
+        el.href = "tel:" + phone.replace(/\D/g, '');
+      }
+    });
+
+    const email = data.email || "";
+    safeQuerySelectorAll("[data-email]", el => {
+      el.textContent = email;
+      if(el.tagName.toLowerCase() === 'a'){
+        el.href = "mailto:" + email;
+      }
+    });
+
+    safeQuerySelectorAll("[data-rating]", el => el.textContent = data.rating || "");
+    safeQuerySelectorAll("[data-reviews], [data-review-count]", el => {
+      el.textContent = data.reviewsCount || "0";
+    });
+
+    // Location info
+    safeQuerySelectorAll("[data-city]", el => el.textContent = data.city || "");
+    safeQuerySelectorAll("[data-state]", el => el.textContent = data.state || "");
+    safeQuerySelectorAll("[data-street]", el => el.textContent = data.street || "");
+    safeQuerySelectorAll("[data-zip]", el => el.textContent = data.postalCode || "");
+
+    // Logo
+    if(data.logo) {
+      safeQuerySelectorAll("[data-logo]", el => {
+        el.src = data.logo;
+        el.alt = data.businessName + " Logo";
+      });
+    }
+
+    // Review link
+    if(data.reviewsLink) {
+      safeQuerySelectorAll("[data-reviewlink]", el => {
+        el.href = data.reviewsLink;
+      });
+    }
+
+    // Social Media Links
+    const facebookUrl = "https://www.facebook.com/people/Dorsey-Plumbing-LLC/61566606485127/";
+    safeQuerySelectorAll('a[aria-label="Facebook"]', el => {
+      el.href = facebookUrl;
+    });
+
+    // About content
+    safeQuerySelectorAll("[data-about-content]", el => {
+      el.textContent = data.aboutUs || "";
+    });
+
+    // **Dynamically Update the Page Title**
+    const dynamicTitle = `${data.businessName || 'Plumbing Services'} - ${data.tagline || 'Your Trusted Plumber'}`;
+    const titleElement = document.getElementById('dynamic-title');
+    if (titleElement) {
+      titleElement.textContent = dynamicTitle;
+    } else {
+      // Fallback in case the title element isn't found
+      document.title = dynamicTitle;
+    }
+
+    // Initialize components that are visible on page load
+    if (isElementInViewport(document.getElementById('about-us'))) {
+      if (data.photos && !initializedSections.aboutUs) {
+        initAboutSlider(data.photos.aboutUsImages || []);
+        initializedSections.aboutUs = true;
+      }
+    }
+
+    if (isElementInViewport(document.getElementById('reviewsSection'))) {
+      if (!initializedSections.reviewsSection) {
+        initReviews(data.fiveStarReviews || []);
+        initializedSections.reviewsSection = true;
+      }
+    }
+
+    // Mobile menu handler
+    const hamburger = document.querySelector(".hamburger");
+    const navList = document.querySelector(".nav-list");
+    if(hamburger && navList) {
+      hamburger.addEventListener("click", () => {
+        navList.classList.toggle("active");
+      });
+    }
+
+    // Initialize hero images and slider if visible
+    if (data.photos) {
+      initHeroImages(data.photos.heroImages || []);
+      startHeroSlider();
+    }
+  }
+
+  // ... rest of the JavaScript code remains the same ...
+  // (All other functions like safeQuerySelectorAll, initHeroImages, etc. stay unchanged)
+
+})();
+
+      // Store data globally
+      globalBusinessData = business;
+
+      // Initialize site with stored data
+      initializeSite(globalBusinessData);
+
+      // Initialize Intersection Observers
+      initializeObservers();
+    })
+    .catch(err => {
+      console.error("Error loading data:", err);
+      showErrorMessage();
+    });
+
+  function showErrorMessage() {
+    const body = document.querySelector('body');
+    if (body) {
+      const errorDiv = document.createElement('div');
+      errorDiv.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.2); z-index: 9999;';
+      errorDiv.innerHTML = `
+        <h3 style="color: red; margin: 0 0 10px 0;">Error Loading Data</h3>
+        <p style="margin: 0;">Please refresh the page to try again.</p>
+      `;
+      body.appendChild(errorDiv);
+    }
+
+    // **Set a Fallback Title**
+    const titleElement = document.getElementById('dynamic-title');
+    if (titleElement) {
+      titleElement.textContent = "Error - Plumbing Services";
+    } else {
+      document.title = "Error - Plumbing Services";
+    }
+  }
+
+  // Intersection Observer Setup
+  function initializeObservers() {
+    const options = {
+      root: null, // viewport
+      rootMargin: '0px',
+      threshold: 0.1 // Trigger when 10% of the section is visible
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    // Observe all sections that need lazy initialization
+    const sectionsToObserve = document.querySelectorAll('section[id]');
+    sectionsToObserve.forEach(section => {
+      observer.observe(section);
+    });
+  }
+
+  function handleIntersection(entries, observer) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.id;
+        reinitializeSection(sectionId);
+        // Stop observing once the section has been initialized
+        observer.unobserve(entry.target);
+      }
+    });
+  }
+
+  function reinitializeSection(sectionId) {
+    if (!globalBusinessData) return;
+
+    switch(sectionId) {
+      case 'reviewsSection':
+        if (!initializedSections.reviewsSection) {
+          initReviews(globalBusinessData.fiveStarReviews || []);
+          initializedSections.reviewsSection = true;
+        }
+        break;
+      case 'about-us':
+        if (globalBusinessData.photos && !initializedSections.aboutUs) {
+          initAboutSlider(globalBusinessData.photos.aboutUsImages || []);
+          initializedSections.aboutUs = true;
+        }
+        break;
+      // Add more cases if needed
+    }
+  }
+
+  function clearSliderIntervals() {
+    sliderIntervals.forEach(interval => clearInterval(interval));
+    sliderIntervals = [];
+  }
+
+  function initializeSite(data) {
+    // Clear any existing intervals
+    clearSliderIntervals();
+
+    // Set theme colors first
+    if(data.secondaryColor) {
+      document.documentElement.style.setProperty('--primary-color', data.secondaryColor);
+    }
+    if(data.primaryColor) {
+      document.documentElement.style.setProperty('--accent-color', data.primaryColor);
+    }
+
+    // Fill in all the dynamic content
+    safeQuerySelectorAll("[data-business-name]", el => {
+      el.textContent = data.businessName || "Business Name Not Found";
+    });
+
     const phone = data.phone || "";
     safeQuerySelectorAll("[data-phone]", el => {
       el.textContent = phone;
