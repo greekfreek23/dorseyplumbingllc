@@ -34,25 +34,28 @@
       _paq.push(['setTrackerUrl', u+'matomo.php']);
       _paq.push(['setSiteId', '1']);
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.src='https://cdn.matomo.cloud/alplumberssitevercelapp.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+      g.async=true; g.src='https://cdn.matomo.cloud/alplumberssitevercelapp.matomo.cloud/matomo.js';
+      s.parentNode.insertBefore(g,s);
     })();
   </script>
   <!-- End Matomo Code -->
 
 </head>
 
-
 <body>
   <!-- HEADER -->
   <header class="header">
     <div class="logo-section">
-      <img src="" alt="Anything Plumbing Logo" class="logo" data-logo />
+      <!-- Logo is set by script.js via data-logo -->
+      <img src="" alt="Dorsey Plumbing LLC Logo" class="logo" data-logo />
     </div>
     <div class="contact-bar">
+      <!-- Phone -->
       <a href="tel:" class="contact-item phone-link">
         <i class="fas fa-phone"></i>
         <span data-phone></span>
       </a>
+      <!-- Email -->
       <a href="mailto:" class="contact-item email-link">
         <i class="fas fa-envelope"></i>
         <span data-email></span>
@@ -78,6 +81,7 @@
   <!-- HERO SECTION -->
   <div class="hero" id="heroSection">
     <div class="slides">
+      <!-- Slide 1 -->
       <div class="slide active" data-hero-image="0">
         <div class="hero-overlay">
           <p class="hero-desc" data-hero-cta="0"></p>
@@ -87,6 +91,7 @@
           </a>
         </div>
       </div>
+      <!-- Slide 2 -->
       <div class="slide" data-hero-image="1">
         <div class="hero-overlay">
           <p class="hero-desc" data-hero-cta="1"></p>
@@ -96,6 +101,7 @@
           </a>
         </div>
       </div>
+      <!-- Slide 3 -->
       <div class="slide" data-hero-image="2">
         <div class="hero-overlay">
           <p class="hero-desc" data-hero-cta="2"></p>
@@ -112,9 +118,7 @@
   <section class="about-us-section" id="about-us">
     <div class="about-container">
       <!-- Slider container for images (populated by JS using data-about-slider) -->
-      <div class="about-image" data-about-slider>
-        <!-- The JS will create .slide elements with .active class rotating -->
-      </div>
+      <div class="about-image" data-about-slider></div>
       <!-- Text container -->
       <div class="about-text">
         <h2 class="about-heading">About <span data-business-name></span></h2>
@@ -123,88 +127,86 @@
     </div>
   </section>
 
- // script.js
+  <!-- SERVICES SECTION -->
+  <section class="services-section" id="services">
+    <h2 class="service-heading">Expert Solutions by <span data-business-name></span></h2>
+    <div class="services-grid">
 
-// Example data for Dorsey Plumbing LLC:
-const plumberData = {
-  businessName: "Dorsey Plumbing LLC",
-  phone: "+1 470-489-8841",
-  email: "example@dorseyplumbing.com",  // or any email you wish to show
-  street: "N/A",                       // If you have a street address
-  city: "Opelika",
-  state: "AL",
-  zip: "36801",
-  rating: 5,                           // star rating
-  reviews: 2,                          // number of reviews
-  aboutContent: `Dorsey Plumbing LLC is your trusted, reliable plumber in Opelika, AL. Whether it’s emergency service or routine maintenance, we have you covered.`,
-  heroCta: [
-    "Emergency? Call us now for immediate help!", 
-    "Need a plumber? We’re here 24/7 for you!", 
-    "Got leaks? Let our experts fix it fast!"
-  ],
-  reviewLink: "https://search.google.com/local/reviews?placeid=ChIJeTIrzE1TrKMRCq-vILpE01A",
-  logoUrl: "https://lh6.googleusercontent.com/-25pYWHqDxsk/...", // Or your own logo link
-};
+      <!-- Example Service 1 -->
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3>24/7 Emergency Service</h3>
+        <p>Immediate response to all plumbing emergencies. Available day or night.</p>
+        <!-- "Call Now" link -->
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
 
-// Helper function to set text content in elements that match a data attribute
-function setTextContent(attribute, value) {
-  document.querySelectorAll(`[data-${attribute}]`).forEach(el => {
-    el.textContent = value;
-  });
-}
+      <!-- Example Service 2 -->
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-home"></i>
+        </div>
+        <h3>Residential Plumbing</h3>
+        <p>Complete home plumbing solutions from repairs to remodels.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
 
-// On DOMContentLoaded, populate the placeholders
-document.addEventListener("DOMContentLoaded", function() {
-  // Set basic info
-  setTextContent("business-name", plumberData.businessName);
-  setTextContent("phone", plumberData.phone);
-  setTextContent("email", plumberData.email);
-  setTextContent("city", plumberData.city);
-  setTextContent("street", plumberData.street);
-  setTextContent("state", plumberData.state);
-  setTextContent("zip", plumberData.zip);
-  setTextContent("rating", plumberData.rating);
-  setTextContent("reviews", plumberData.reviews);
+      <!-- Example Service 3 -->
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-shower"></i>
+        </div>
+        <h3>Drain Cleaning</h3>
+        <p>Professional drain cleaning and maintenance. Keep drains flowing smoothly.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
 
-  // If you want to handle the count differently in reviews:
-  document.querySelectorAll("[data-review-count]").forEach(el => {
-    el.textContent = plumberData.reviews;
-  });
+      <!-- Example Service 4 -->
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-fire"></i>
+        </div>
+        <h3>Water Heater Services</h3>
+        <p>Installation, repair, and maintenance of all water heater types.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
 
-  // About content
-  const aboutParagraph = document.querySelector("[data-about-content]");
-  if (aboutParagraph) {
-    aboutParagraph.textContent = plumberData.aboutContent;
-  }
+      <!-- Example Service 5 -->
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-wrench"></i>
+        </div>
+        <h3>Repairs & Installation</h3>
+        <p>Quality-guaranteed repairs and new installations by licensed professionals.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
 
-  // Set dynamic hero text (for each slide)
-  plumberData.heroCta.forEach((text, index) => {
-    const heroDesc = document.querySelector(`[data-hero-cta="${index}"]`);
-    if (heroDesc) {
-      heroDesc.textContent = text;
-    }
-  });
+      <!-- Example Service 6 -->
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-tint"></i>
+        </div>
+        <h3>Leak Detection</h3>
+        <p>Advanced technology to locate and repair hidden leaks quickly.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
 
-  // Review link
-  const reviewBtn = document.querySelector("[data-reviewlink]");
-  if (reviewBtn) {
-    reviewBtn.href = plumberData.reviewLink;
-  }
-
-  // Logo (if needed)
-  const logoElems = document.querySelectorAll("[data-logo]");
-  logoElems.forEach(img => {
-    img.src = plumberData.logoUrl;
-    img.alt = plumberData.businessName + " Logo";
-  });
-
-  // Update page title (optional):
-  const titleElem = document.getElementById("dynamic-title");
-  if (titleElem) {
-    titleElem.textContent = "Dorsey Plumbing LLC - Opelika, AL";
-  }
-});
-
+    </div>
+  </section>
 
   <!-- REVIEWS SECTION -->
   <section class="reviews-section" id="reviewsSection">
@@ -230,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <!-- CONTACT SECTION -->
   <section class="contact-section">
     <div class="form-header">
-      <img src="" alt="Anything Plumbing Logo" class="form-logo" style="width:150px;height:150px;" data-logo />
+      <img src="" alt="Dorsey Plumbing LLC Logo" class="form-logo" style="width:150px;height:150px;" data-logo />
       <p class="form-description">
         Need a quote? Fill out the form below or call 
         <strong>
@@ -240,22 +242,34 @@ document.addEventListener("DOMContentLoaded", function() {
       </p>
     </div>
     <div class="form-container" id="contactForm">
-      <form>
+      <!--
+        Using mailto: so the user’s email client opens with these fields.
+        It's not a 100% guaranteed “submit to your inbox,”
+        but it's the simplest approach without a server.
+
+        method="POST" + enctype="text/plain" is recommended
+        for sending the form data in a more readable format.
+      -->
+      <form 
+        action="mailto:nicksanford2341@gmail.com" 
+        method="POST" 
+        enctype="text/plain"
+      >
         <div class="form-group">
           <label class="form-label">Name</label>
-          <input type="text" class="form-input" placeholder="Enter your name" required />
+          <input type="text" class="form-input" name="Name" placeholder="Enter your name" required />
         </div>
         <div class="form-group">
           <label class="form-label">Phone</label>
-          <input type="tel" class="form-input" placeholder="Enter your phone number" required />
+          <input type="tel" class="form-input" name="Phone" placeholder="Enter your phone number" required />
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>
-          <input type="email" class="form-input" placeholder="Enter your email address" required />
+          <input type="email" class="form-input" name="Email" placeholder="Enter your email address" required />
         </div>
         <div class="form-group">
           <label class="form-label">Service Needed</label>
-          <select class="form-select" required>
+          <select class="form-select" name="Service" required>
             <option value="">Select a Service</option>
             <option value="emergency">24/7 Emergency</option>
             <option value="residential">Residential Plumbing</option>
@@ -267,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
         <div class="form-group">
           <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Describe your request..." required></textarea>
+          <textarea class="form-textarea" name="Message" placeholder="Describe your request..." required></textarea>
         </div>
         <button type="submit" class="submit-btn">Submit Request</button>
       </form>
@@ -305,7 +319,14 @@ document.addEventListener("DOMContentLoaded", function() {
       <div class="footer-section social-icons">
         <h3>Follow Us</h3>
         <div class="social-links">
-          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <!-- Put data-facebook-link if you want to set it via JS. 
+               Or just hardcode the href to your Facebook page. -->
+          <a
+            href="https://www.facebook.com/people/Dorsey-Plumbing-LLC/61566606485127/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+          >
             <i class="fab fa-facebook-f"></i>
           </a>
           <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -331,4 +352,5 @@ document.addEventListener("DOMContentLoaded", function() {
   <script src="script.js"></script>
 </body>
 </html>
+
 
