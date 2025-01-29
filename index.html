@@ -123,72 +123,88 @@
     </div>
   </section>
 
-  <!-- SERVICES SECTION -->
-  <section class="services-section" id="services">
-    <h2 class="service-heading">Expert Solutions by <span data-business-name></span></h2>
-    <div class="services-grid">
-      <div class="service-box">
-        <div class="icon-container">
-          <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <h3>24/7 Emergency Service</h3>
-        <p>Immediate response to all plumbing emergencies. Available day or night.</p>
-        <a href="tel:" class="call-btn" data-phone>
-          <i class="fas fa-phone"></i> Call Now
-        </a>
-      </div>
-      <div class="service-box">
-        <div class="icon-container">
-          <i class="fas fa-home"></i>
-        </div>
-        <h3>Residential Plumbing</h3>
-        <p>Complete home plumbing solutions from repairs to remodels.</p>
-        <a href="tel:" class="call-btn" data-phone>
-          <i class="fas fa-phone"></i> Call Now
-        </a>
-      </div>
-      <div class="service-box">
-        <div class="icon-container">
-          <i class="fas fa-shower"></i>
-        </div>
-        <h3>Drain Cleaning</h3>
-        <p>Professional drain cleaning and maintenance. Keep drains flowing smoothly.</p>
-        <a href="tel:" class="call-btn" data-phone>
-          <i class="fas fa-phone"></i> Call Now
-        </a>
-      </div>
-      <div class="service-box">
-        <div class="icon-container">
-          <i class="fas fa-fire"></i>
-        </div>
-        <h3>Water Heater Services</h3>
-        <p>Installation, repair, and maintenance of all water heater types.</p>
-        <a href="tel:" class="call-btn" data-phone>
-          <i class="fas fa-phone"></i> Call Now
-        </a>
-      </div>
-      <div class="service-box">
-        <div class="icon-container">
-          <i class="fas fa-wrench"></i>
-        </div>
-        <h3>Repairs & Installation</h3>
-        <p>Quality-guaranteed repairs and new installations by licensed professionals.</p>
-        <a href="tel:" class="call-btn" data-phone>
-          <i class="fas fa-phone"></i> Call Now
-        </a>
-      </div>
-      <div class="service-box">
-        <div class="icon-container">
-          <i class="fas fa-tint"></i>
-        </div>
-        <h3>Leak Detection</h3>
-        <p>Advanced technology to locate and repair hidden leaks quickly.</p>
-        <a href="tel:" class="call-btn" data-phone>
-          <i class="fas fa-phone"></i> Call Now
-        </a>
-      </div>
-    </div>
-  </section>
+ // script.js
+
+// Example data for Dorsey Plumbing LLC:
+const plumberData = {
+  businessName: "Dorsey Plumbing LLC",
+  phone: "+1 470-489-8841",
+  email: "example@dorseyplumbing.com",  // or any email you wish to show
+  street: "N/A",                       // If you have a street address
+  city: "Opelika",
+  state: "AL",
+  zip: "36801",
+  rating: 5,                           // star rating
+  reviews: 2,                          // number of reviews
+  aboutContent: `Dorsey Plumbing LLC is your trusted, reliable plumber in Opelika, AL. Whether it’s emergency service or routine maintenance, we have you covered.`,
+  heroCta: [
+    "Emergency? Call us now for immediate help!", 
+    "Need a plumber? We’re here 24/7 for you!", 
+    "Got leaks? Let our experts fix it fast!"
+  ],
+  reviewLink: "https://search.google.com/local/reviews?placeid=ChIJeTIrzE1TrKMRCq-vILpE01A",
+  logoUrl: "https://lh6.googleusercontent.com/-25pYWHqDxsk/...", // Or your own logo link
+};
+
+// Helper function to set text content in elements that match a data attribute
+function setTextContent(attribute, value) {
+  document.querySelectorAll(`[data-${attribute}]`).forEach(el => {
+    el.textContent = value;
+  });
+}
+
+// On DOMContentLoaded, populate the placeholders
+document.addEventListener("DOMContentLoaded", function() {
+  // Set basic info
+  setTextContent("business-name", plumberData.businessName);
+  setTextContent("phone", plumberData.phone);
+  setTextContent("email", plumberData.email);
+  setTextContent("city", plumberData.city);
+  setTextContent("street", plumberData.street);
+  setTextContent("state", plumberData.state);
+  setTextContent("zip", plumberData.zip);
+  setTextContent("rating", plumberData.rating);
+  setTextContent("reviews", plumberData.reviews);
+
+  // If you want to handle the count differently in reviews:
+  document.querySelectorAll("[data-review-count]").forEach(el => {
+    el.textContent = plumberData.reviews;
+  });
+
+  // About content
+  const aboutParagraph = document.querySelector("[data-about-content]");
+  if (aboutParagraph) {
+    aboutParagraph.textContent = plumberData.aboutContent;
+  }
+
+  // Set dynamic hero text (for each slide)
+  plumberData.heroCta.forEach((text, index) => {
+    const heroDesc = document.querySelector(`[data-hero-cta="${index}"]`);
+    if (heroDesc) {
+      heroDesc.textContent = text;
+    }
+  });
+
+  // Review link
+  const reviewBtn = document.querySelector("[data-reviewlink]");
+  if (reviewBtn) {
+    reviewBtn.href = plumberData.reviewLink;
+  }
+
+  // Logo (if needed)
+  const logoElems = document.querySelectorAll("[data-logo]");
+  logoElems.forEach(img => {
+    img.src = plumberData.logoUrl;
+    img.alt = plumberData.businessName + " Logo";
+  });
+
+  // Update page title (optional):
+  const titleElem = document.getElementById("dynamic-title");
+  if (titleElem) {
+    titleElem.textContent = "Dorsey Plumbing LLC - Opelika, AL";
+  }
+});
+
 
   <!-- REVIEWS SECTION -->
   <section class="reviews-section" id="reviewsSection">
