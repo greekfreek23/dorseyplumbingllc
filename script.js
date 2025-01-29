@@ -1,178 +1,155 @@
-// -----------------------------------------
-// 1. HARDCODE THE PLACE ID (no ?site_id=)
-// -----------------------------------------
-const PLACE_ID = "ChIJeTIrzE1TrKMRCq-vILpE01A"; // Dorsey Plumbing LLC
+/*******************************************************
+ * script.js
+ * (No ?site_id=; Hardcoded Dorsey Plumbing LLC info)
+ *******************************************************/
 
-// If you also want to store the Facebook link in code:
-const FACEBOOK_URL = "https://www.facebook.com/people/Dorsey-Plumbing-LLC/61566606485127/";
+// Hardcoded data for Dorsey Plumbing LLC
+const plumberData = {
+  businessName: "Dorsey Plumbing LLC",
+  phone: "+1 470-489-8841",
+  email: "example@dorseyplumbing.com",  // Replace if needed
+  street: "N/A",                       // Replace if you have an actual street
+  city: "Opelika",
+  state: "AL",
+  zip: "36801",
+  rating: 5,                           // star rating
+  reviews: 2,                          // number of reviews
 
-// Optional: a function or constant that returns your API endpoint
-// In your original code, this might have been something else.
-function getApiUrl(placeId) {
-  // Example: calling your backend or a 3rd-party service
-  // that returns data about the place
-  // Adjust the URL to your actual data source
-  return `https://your-backend.com/get-data-by-placeid?place_id=${encodeURIComponent(placeId)}`;
+  aboutContent: `Dorsey Plumbing LLC is your trusted, reliable plumber in Opelika, AL. Whether it’s emergency service or routine maintenance, we have you covered.`,
+
+  heroCta: [
+    "Emergency? Call us now for immediate help!",
+    "Need a plumber? We’re here 24/7 for you!",
+    "Got leaks? Let our experts fix it fast!"
+  ],
+
+  reviewLink: "https://search.google.com/local/reviews?placeid=ChIJeTIrzE1TrKMRCq-vILpE01A",
+  logoUrl: "https://lh6.googleusercontent.com/-25pYWHqDxsk/...", // Replace with your logo URL if you want
+  facebookUrl: "https://www.facebook.com/people/Dorsey-Plumbing-LLC/61566606485127/"
+};
+
+// Helper function to set text content for elements with [data-ATTRIBUTE]
+function setTextContent(attribute, value) {
+  document.querySelectorAll(`[data-${attribute}]`).forEach(el => {
+    el.textContent = value;
+  });
 }
 
-// -----------------------------------------
-// 2. FETCH THE PLACE DATA FROM YOUR BACKEND
-//    (OR ANY API THAT PROVIDES GMB DETAILS)
-// -----------------------------------------
+// When the DOM is loaded, populate placeholders
+document.addEventListener("DOMContentLoaded", function() {
+  // 1. Basic info
+  setTextContent("business-name", plumberData.businessName);
+  setTextContent("phone", plumberData.phone);
+  setTextContent("email", plumberData.email);
+  setTextContent("city", plumberData.city);
+  setTextContent("street", plumberData.street);
+  setTextContent("state", plumberData.state);
+  setTextContent("zip", plumberData.zip);
+  setTextContent("rating", plumberData.rating);
+  setTextContent("reviews", plumberData.reviews);
 
-/*
-  This is just an example approach:
-  - You have a backend that, given a place ID,
-    returns all relevant info (phone, rating, reviews, images, etc.).
-  - If your original code used a different approach (like direct from Google),
-    then adapt this fetch call accordingly.
-*/
-
-fetch(getApiUrl(PLACE_ID))
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(placeData => {
-    // placeData is presumably the JSON with phone, email, rating, etc.
-    // Example structure:
-    // {
-    //   "businessName": "Dorsey Plumbing LLC",
-    //   "phone": "+1 470-489-8841",
-    //   "email": "example@dorseyplumbing.com",
-    //   "street": "123 Plumbing St",
-    //   "city": "Opelika",
-    //   "state": "AL",
-    //   "zip": "36801",
-    //   "rating": 5,
-    //   "reviews": 2,
-    //   "aboutContent": "...",
-    //   "heroCta": ["...", "...", "..."],
-    //   "reviewLink": "...",
-    //   "logoUrl": "...",
-    //   "photos": [...],
-    //   ...
-    // }
-
-    // -----------------------------------------
-    // 3. POPULATE THE PAGE USING placeData
-    // -----------------------------------------
-
-    // Helper to set text content for [data-*] attributes
-    function setTextContent(attribute, value) {
-      document.querySelectorAll(`[data-${attribute}]`).forEach(el => {
-        el.textContent = value;
-      });
-    }
-
-    // Update DOM on page load
-    setTextContent("business-name", placeData.businessName);
-    setTextContent("phone", placeData.phone);
-    setTextContent("email", placeData.email);
-    setTextContent("city", placeData.city);
-    setTextContent("street", placeData.street);
-    setTextContent("state", placeData.state);
-    setTextContent("zip", placeData.zip);
-    setTextContent("rating", placeData.rating);
-    setTextContent("reviews", placeData.reviews);
-
-    // If you have separate [data-review-count] placeholders
-    document.querySelectorAll("[data-review-count]").forEach(el => {
-      el.textContent = placeData.reviews;
-    });
-
-    // About
-    const aboutEl = document.querySelector("[data-about-content]");
-    if (aboutEl) {
-      aboutEl.textContent = placeData.aboutContent || "";
-    }
-
-    // Hero CTA texts
-    if (Array.isArray(placeData.heroCta)) {
-      placeData.heroCta.forEach((text, index) => {
-        const heroDesc = document.querySelector(`[data-hero-cta="${index}"]`);
-        if (heroDesc) {
-          heroDesc.textContent = text;
-        }
-      });
-    }
-
-    // Set review button link
-    const reviewBtn = document.querySelector("[data-reviewlink]");
-    if (reviewBtn && placeData.reviewLink) {
-      reviewBtn.href = placeData.reviewLink;
-    }
-
-    // Logo
-    if (placeData.logoUrl) {
-      document.querySelectorAll("[data-logo]").forEach(img => {
-        img.src = placeData.logoUrl;
-        img.alt = `${placeData.businessName} Logo`;
-      });
-    }
-
-    // Make sure all phone links get the phone number
-    document.querySelectorAll('a[href^="tel:"][data-phone]').forEach(a => {
-      a.setAttribute("href", `tel:${placeData.phone}`);
-    });
-
-    // Page title
-    const titleElem = document.getElementById("dynamic-title");
-    if (titleElem) {
-      titleElem.textContent = `${placeData.businessName} - ${placeData.city}, ${placeData.state}`;
-    }
-
-    // If you have a place for the Facebook link in the DOM, set it
-    const facebookLinkEl = document.querySelector("[data-facebook-link]");
-    if (facebookLinkEl) {
-      facebookLinkEl.href = FACEBOOK_URL;
-    }
-
-    // -----------------------------------------
-    // 4. HANDLE PHOTOS / SLIDERS / REVIEWS
-    // -----------------------------------------
-
-    // Example: if you want to show photos in an "about slider"
-    if (Array.isArray(placeData.photos)) {
-      const aboutSlider = document.querySelector("[data-about-slider]");
-      if (aboutSlider) {
-        placeData.photos.forEach((photoUrl, idx) => {
-          const slide = document.createElement("div");
-          slide.classList.add("slide");
-          // Maybe the first slide is "active"
-          if (idx === 0) slide.classList.add("active");
-          slide.innerHTML = `<img src="${photoUrl}" alt="About Image ${idx}" />`;
-          aboutSlider.appendChild(slide);
-        });
-      }
-    }
-
-    // Example: populating the #reviewsTrack slider
-    const reviewsTrack = document.getElementById("reviewsTrack");
-    if (reviewsTrack && Array.isArray(placeData.customerReviews)) {
-      placeData.customerReviews.forEach(review => {
-        // Expect review = { author: '', rating: 5, comment: '' }
-        const reviewElement = document.createElement("div");
-        reviewElement.classList.add("review-item");
-        reviewElement.innerHTML = `
-          <p class="review-comment">"${review.comment}"</p>
-          <p class="review-author">- ${review.author}</p>
-          <p class="review-rating">Rating: ${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</p>
-        `;
-        reviewsTrack.appendChild(reviewElement);
-      });
-    }
-
-    // Any additional logic for slideshows, animations, etc.
-    // ...
-  })
-  .catch(err => {
-    console.error("Error fetching place data:", err);
-    // Optionally show a fallback or error message in the UI
+  // 2. If you have a separate [data-review-count]
+  document.querySelectorAll("[data-review-count]").forEach(el => {
+    el.textContent = plumberData.reviews;
   });
 
+  // 3. About content
+  const aboutParagraph = document.querySelector("[data-about-content]");
+  if (aboutParagraph) {
+    aboutParagraph.textContent = plumberData.aboutContent;
+  }
+
+  // 4. Hero CTA
+  plumberData.heroCta.forEach((text, index) => {
+    const heroDesc = document.querySelector(`[data-hero-cta="${index}"]`);
+    if (heroDesc) {
+      heroDesc.textContent = text;
+    }
+  });
+
+  // 5. Review link
+  const reviewBtn = document.querySelector("[data-reviewlink]");
+  if (reviewBtn) {
+    reviewBtn.href = plumberData.reviewLink;
+  }
+
+  // 6. Logo
+  const logoElems = document.querySelectorAll("[data-logo]");
+  logoElems.forEach(img => {
+    img.src = plumberData.logoUrl;
+    img.alt = plumberData.businessName + " Logo";
+  });
+
+  // 7. Page title
+  const titleElem = document.getElementById("dynamic-title");
+  if (titleElem) {
+    titleElem.textContent = "Dorsey Plumbing LLC - Opelika, AL";
+  }
+
+  // 8. "Call Now" links
+  //    Any <a href="tel:" data-phone> gets the phone
+  document.querySelectorAll('a[href^="tel:"][data-phone]').forEach(el => {
+    el.setAttribute("href", `tel:${plumberData.phone}`);
+  });
+
+  // 9. If you want to dynamically set the Facebook link:
+  //    In your HTML, you could do:
+  //      <a data-facebook-link>
+  //         <i class="fab fa-facebook-f"></i>
+  //      </a>
+  const fbLinkEl = document.querySelector("[data-facebook-link]");
+  if (fbLinkEl) {
+    fbLinkEl.href = plumberData.facebookUrl;
+  }
+
+  // 10. If you want to populate reviews in #reviewsTrack
+  //     (Example placeholder data)
+  const reviewsTrack = document.getElementById("reviewsTrack");
+  if (reviewsTrack) {
+    const sampleReviews = [
+      {
+        author: "John Doe",
+        rating: 5,
+        comment: "Quick, professional, and fair-priced!"
+      },
+      {
+        author: "Jane Smith",
+        rating: 5,
+        comment: "Fixed my leak in minutes. Highly recommend!"
+      }
+    ];
+    sampleReviews.forEach(review => {
+      const reviewEl = document.createElement("div");
+      reviewEl.classList.add("review-item");
+      reviewEl.innerHTML = `
+        <p class="review-comment">"${review.comment}"</p>
+        <p class="review-author">- ${review.author}</p>
+        <p class="review-rating">Rating: ${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</p>
+      `;
+      reviewsTrack.appendChild(reviewEl);
+    });
+  }
+
+  // 11. If you have an [data-about-slider] to populate with images
+  //     you can do it here. For example:
+  /*
+  const aboutSlider = document.querySelector("[data-about-slider]");
+  if (aboutSlider) {
+    const sliderImages = [
+      "https://via.placeholder.com/600x400?text=Dorsey+Plumbing+LLC+1",
+      "https://via.placeholder.com/600x400?text=Dorsey+Plumbing+LLC+2"
+    ];
+    sliderImages.forEach((imgUrl, i) => {
+      const slide = document.createElement("div");
+      slide.classList.add("slide");
+      if (i === 0) slide.classList.add("active");
+      slide.innerHTML = `<img src="${imgUrl}" alt="Slider image ${i}" />`;
+      aboutSlider.appendChild(slide);
+    });
+  }
+  */
+
+});
 
 
 
