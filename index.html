@@ -34,28 +34,25 @@
       _paq.push(['setTrackerUrl', u+'matomo.php']);
       _paq.push(['setSiteId', '1']);
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.src='https://cdn.matomo.cloud/alplumberssitevercelapp.matomo.cloud/matomo.js';
-      s.parentNode.insertBefore(g,s);
+      g.async=true; g.src='https://cdn.matomo.cloud/alplumberssitevercelapp.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
     })();
   </script>
   <!-- End Matomo Code -->
 
 </head>
 
+
 <body>
   <!-- HEADER -->
   <header class="header">
     <div class="logo-section">
-      <!-- Logo is set by script.js via data-logo -->
-      <img src="" alt="Dorsey Plumbing LLC Logo" class="logo" data-logo />
+      <img src="" alt="Anything Plumbing Logo" class="logo" data-logo />
     </div>
     <div class="contact-bar">
-      <!-- Phone -->
       <a href="tel:" class="contact-item phone-link">
         <i class="fas fa-phone"></i>
         <span data-phone></span>
       </a>
-      <!-- Email -->
       <a href="mailto:" class="contact-item email-link">
         <i class="fas fa-envelope"></i>
         <span data-email></span>
@@ -81,7 +78,6 @@
   <!-- HERO SECTION -->
   <div class="hero" id="heroSection">
     <div class="slides">
-      <!-- Slide 1 -->
       <div class="slide active" data-hero-image="0">
         <div class="hero-overlay">
           <p class="hero-desc" data-hero-cta="0"></p>
@@ -91,7 +87,6 @@
           </a>
         </div>
       </div>
-      <!-- Slide 2 -->
       <div class="slide" data-hero-image="1">
         <div class="hero-overlay">
           <p class="hero-desc" data-hero-cta="1"></p>
@@ -101,7 +96,6 @@
           </a>
         </div>
       </div>
-      <!-- Slide 3 -->
       <div class="slide" data-hero-image="2">
         <div class="hero-overlay">
           <p class="hero-desc" data-hero-cta="2"></p>
@@ -118,7 +112,9 @@
   <section class="about-us-section" id="about-us">
     <div class="about-container">
       <!-- Slider container for images (populated by JS using data-about-slider) -->
-      <div class="about-image" data-about-slider></div>
+      <div class="about-image" data-about-slider>
+        <!-- The JS will create .slide elements with .active class rotating -->
+      </div>
       <!-- Text container -->
       <div class="about-text">
         <h2 class="about-heading">About <span data-business-name></span></h2>
@@ -127,33 +123,72 @@
     </div>
   </section>
 
-
-<section id="services">
-  <h2>Our Services</h2>
-  
-  <div class="service-item">
-    <h3>Residential Plumbing</h3>
-    <p>Expert plumbing services for your home, including repairs, installations, and maintenance.</p>
-    <button class="call-button">123-456-7890</button>
-  </div>
-  
-  <div class="service-item">
-    <h3>Commercial Plumbing</h3>
-    <p>Reliable plumbing solutions tailored for businesses and commercial properties.</p>
-    <button class="call-button">123-456-7890</button>
-  </div>
-  
-  <div class="service-item">
-    <h3>Emergency Services</h3>
-    <p>24/7 emergency plumbing services to handle urgent issues promptly.</p>
-    <button class="call-button">123-456-7890</button>
-  </div>
-  
-  <!-- Add more service items as needed -->
-</section>
-
-
-  
+  <!-- SERVICES SECTION -->
+  <section class="services-section" id="services">
+    <h2 class="service-heading">Expert Solutions by <span data-business-name></span></h2>
+    <div class="services-grid">
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3>24/7 Emergency Service</h3>
+        <p>Immediate response to all plumbing emergencies. Available day or night.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-home"></i>
+        </div>
+        <h3>Residential Plumbing</h3>
+        <p>Complete home plumbing solutions from repairs to remodels.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-shower"></i>
+        </div>
+        <h3>Drain Cleaning</h3>
+        <p>Professional drain cleaning and maintenance. Keep drains flowing smoothly.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-fire"></i>
+        </div>
+        <h3>Water Heater Services</h3>
+        <p>Installation, repair, and maintenance of all water heater types.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-wrench"></i>
+        </div>
+        <h3>Repairs & Installation</h3>
+        <p>Quality-guaranteed repairs and new installations by licensed professionals.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
+      <div class="service-box">
+        <div class="icon-container">
+          <i class="fas fa-tint"></i>
+        </div>
+        <h3>Leak Detection</h3>
+        <p>Advanced technology to locate and repair hidden leaks quickly.</p>
+        <a href="tel:" class="call-btn" data-phone>
+          <i class="fas fa-phone"></i> Call Now
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- REVIEWS SECTION -->
   <section class="reviews-section" id="reviewsSection">
@@ -179,7 +214,7 @@
   <!-- CONTACT SECTION -->
   <section class="contact-section">
     <div class="form-header">
-      <img src="" alt="Dorsey Plumbing LLC Logo" class="form-logo" style="width:150px;height:150px;" data-logo />
+      <img src="" alt="Anything Plumbing Logo" class="form-logo" style="width:150px;height:150px;" data-logo />
       <p class="form-description">
         Need a quote? Fill out the form below or call 
         <strong>
@@ -189,34 +224,22 @@
       </p>
     </div>
     <div class="form-container" id="contactForm">
-      <!--
-        Using mailto: so the user’s email client opens with these fields.
-        It's not a 100% guaranteed “submit to your inbox,”
-        but it's the simplest approach without a server.
-
-        method="POST" + enctype="text/plain" is recommended
-        for sending the form data in a more readable format.
-      -->
-      <form 
-        action="mailto:nicksanford2341@gmail.com" 
-        method="POST" 
-        enctype="text/plain"
-      >
+      <form>
         <div class="form-group">
           <label class="form-label">Name</label>
-          <input type="text" class="form-input" name="Name" placeholder="Enter your name" required />
+          <input type="text" class="form-input" placeholder="Enter your name" required />
         </div>
         <div class="form-group">
           <label class="form-label">Phone</label>
-          <input type="tel" class="form-input" name="Phone" placeholder="Enter your phone number" required />
+          <input type="tel" class="form-input" placeholder="Enter your phone number" required />
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>
-          <input type="email" class="form-input" name="Email" placeholder="Enter your email address" required />
+          <input type="email" class="form-input" placeholder="Enter your email address" required />
         </div>
         <div class="form-group">
           <label class="form-label">Service Needed</label>
-          <select class="form-select" name="Service" required>
+          <select class="form-select" required>
             <option value="">Select a Service</option>
             <option value="emergency">24/7 Emergency</option>
             <option value="residential">Residential Plumbing</option>
@@ -228,7 +251,7 @@
         </div>
         <div class="form-group">
           <label class="form-label">Message</label>
-          <textarea class="form-textarea" name="Message" placeholder="Describe your request..." required></textarea>
+          <textarea class="form-textarea" placeholder="Describe your request..." required></textarea>
         </div>
         <button type="submit" class="submit-btn">Submit Request</button>
       </form>
@@ -266,14 +289,7 @@
       <div class="footer-section social-icons">
         <h3>Follow Us</h3>
         <div class="social-links">
-          <!-- Put data-facebook-link if you want to set it via JS. 
-               Or just hardcode the href to your Facebook page. -->
-          <a
-            href="https://www.facebook.com/people/Dorsey-Plumbing-LLC/61566606485127/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook"
-          >
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <i class="fab fa-facebook-f"></i>
           </a>
           <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -299,6 +315,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
